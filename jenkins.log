@@ -1,0 +1,84 @@
+Started by user Art Sir
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on slave in /home/jenkins/workspace/docker_nginx
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (run container)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] deleteDir
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Avoid second fetch
+Checking out Revision 63edfd12875768e200c3fd19289a5501681c9216 (refs/remotes/origin/main)
+Commit message: "Update index.html"
+Cloning repository https://github.com/artiom500/gitlab.git
+ > git init /home/jenkins/workspace/docker_nginx # timeout=10
+Fetching upstream changes from https://github.com/artiom500/gitlab.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.25.1'
+ > git fetch --tags --force --progress -- https://github.com/artiom500/gitlab.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/artiom500/gitlab.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 63edfd12875768e200c3fd19289a5501681c9216 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b main 63edfd12875768e200c3fd19289a5501681c9216 # timeout=10
+ > git rev-list --no-walk 63edfd12875768e200c3fd19289a5501681c9216 # timeout=10
+[Pipeline] isUnix
+[Pipeline] sh
++ docker run -d -p 9889:80 --mount type=bind,src=//home/jenkins/workspace/docker_nginx/,dst=/usr/share/nginx/html/ nginx
+[Pipeline] sh
++ curl -s -o /dev/null -I -w %{http_code} http://51.250.77.168:9889
+[Pipeline] sh
++ curl https://raw.githubusercontent.com/artiom500/gitlab/main/index.html
++ md5sum
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0+ cut -d   -f 1
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100    45  100    45    0     0    161      0 --:--:-- --:--:-- --:--:--   160
+[Pipeline] echo
+35635fae9f2f459be4e67864903587c3
+[Pipeline] echo
+200
+[Pipeline] sh
++ curl 51.250.77.168:9889/index.html
++ md5sum
++ cut -d   -f 1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100    45  100    45    0     0  45000      0 --:--:-- --:--:-- --:--:-- 45000
+[Pipeline] echo
+35635fae9f2f459be4e67864903587c3
+[Pipeline] echo
+hash is equal
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker stop 62706b96f9abd60459b67732a5ddc4255e7742ae6bfe41cdec4925298ee4db28
+62706b96f9abd60459b67732a5ddc4255e7742ae6bfe41cdec4925298ee4db28
++ docker rm -f 62706b96f9abd60459b67732a5ddc4255e7742ae6bfe41cdec4925298ee4db28
+62706b96f9abd60459b67732a5ddc4255e7742ae6bfe41cdec4925298ee4db28
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ curl -s -X POST https://api.telegram.org/bot5182326485:AAHrshec7_4VQjU2pjeDni1kR7j9lfnxfz4/sendMessage -d chat_id=-1001598110020 -d text=Nginx works
+{"ok":true,"result":{"message_id":45,"sender_chat":{"id":-1001598110020,"title":"Notify","username":"skill_notefy","type":"channel"},"chat":{"id":-1001598110020,"title":"Notify","username":"skill_notefy","type":"channel"},"date":1660243735,"text":"Nginx works"}}
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
